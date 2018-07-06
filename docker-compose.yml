@@ -1,0 +1,11 @@
+# To execute this docker-compose yml file use docker-compose -f <file_name> up
+# Add the "-d" flag at the end for deattached execution
+version: '2'
+services:
+  chrome:
+    image: selenium/standalone-chrome:3.12.0-cobalt
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - 4444:4444
+
