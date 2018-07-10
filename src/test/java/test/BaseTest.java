@@ -30,15 +30,14 @@ public class BaseTest {
     @Parameters("state")
 
     public void setup(@Optional("") String state) throws IOException {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        //chromeOptions.setCapability("marionette", true);
-        //chromeOptions.addArguments("no-sandbox");
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setBrowserName("chrome");
-
         if (state.contains("headless")) {
+            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setBrowserName("chrome");
             driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-        }else {
+        } else {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setCapability("marionette", true);
+            chromeOptions.addArguments("no-sandbox");
             System.setProperty("webdriver.chrome.driver", "./drivers/chromedriver");
             driver = new ChromeDriver(chromeOptions);
         }

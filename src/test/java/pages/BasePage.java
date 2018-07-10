@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -148,6 +150,7 @@ public class BasePage {
         wait.until(d -> searchButton.isDisplayed());
         Thread.sleep(sleepTime);
         searchButton.click();
+        Thread.sleep(sleepTime);
     }
 
     /**
@@ -194,10 +197,12 @@ public class BasePage {
      */
     public void captureSreenshot(String captureName) {
         try {
+            String filePath = capturePath + "/" + captureDate + "_" + captureTest + "_" + captureName + "." + captureType;
+            createPath(filePath);
             TakesScreenshot scrShot = ((TakesScreenshot)driver);
-            File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-            File DestFile = new File(capturePath + "/" + captureDate + "_" + captureTest + "_" + captureName + "." + captureType);
-            FileHandler.copy(SrcFile, DestFile);
+            File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
+            File destFile = new File(filePath);
+            FileHandler.copy(srcFile, destFile);
         } catch (Exception ex) {
             System.err.println("Unable to capture screenshot...");
             ex.printStackTrace();
@@ -210,11 +215,28 @@ public class BasePage {
      */
     public void captureUrl(String fileName) {
         try {
-            PrintWriter writer = new PrintWriter(capturePath + "/" + captureDate + "_" + captureTest + "_" + fileName, "UTF-8");
+            String filePath = capturePath + "/" + captureDate + "_" + captureTest + "_" + fileName;
+            createPath(filePath);
+            PrintWriter writer = new PrintWriter(filePath, "UTF-8");
             writer.println(driver.getCurrentUrl());
             writer.close();
         } catch (Exception ex) {
             System.err.println("Unable to capture url...");
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * This method creates the path for capturing results.
+     * @param filePath as the path to save under
+     */
+    public void createPath(String filePath) {
+        try {
+            File outFile = new File(filePath);
+            outFile.getParentFile().mkdirs();
+            if (!outFile.exists()) outFile.createNewFile();
+        } catch (Exception ex) {
+            System.err.println("Unable to create path...");
             ex.printStackTrace();
         }
     }
