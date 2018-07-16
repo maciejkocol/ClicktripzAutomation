@@ -4,12 +4,12 @@
   <parameter name="state" value="headless"></parameter>
   <test thread-count="5" name="Hotel Citywide Test">
     <classes>
-      <class name="test.HotelCitywideTest"/>
+      <class name="com.clicktripz.test.HotelCitywideTest"/>
     </classes>
   </test> <!-- Hotel Citywide Test -->
   <test thread-count="5" name="Flights Test">
     <classes>
-      <class name="test.FlightsTest"/>
+      <class name="com.clicktripz.test.FlightsTest"/>
     </classes>
   </test> <!-- Flights Test -->
 </suite> <!-- Suite -->
