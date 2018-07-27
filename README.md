@@ -1,1 +1,1 @@
-# clicktripz
+# Clicktripz Automation Test
