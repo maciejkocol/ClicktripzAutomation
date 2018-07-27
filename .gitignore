@@ -1,4 +1,6 @@
 .DS_Store
+results/
+test-output/
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
